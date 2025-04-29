@@ -1,3 +1,5 @@
+package;
+#if windows
 #if LUA_ALLOWED
 import llua.*;
 #end
@@ -124,3 +126,4 @@ class DiscordClient
 		return newID;
 	}
 }
+#end
