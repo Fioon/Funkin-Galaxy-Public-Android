@@ -123,7 +123,7 @@ class Main extends Sprite
 
 		lime.utils.Log.throwErrors = false; // prevent shader crash erros jumpscare (i can see you FlxDrawQuadsItem)
 
-		#if !mobile
+		#if mobile
 		fpsVar = new FPS(5, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
@@ -137,6 +137,10 @@ class Main extends Sprite
 		#if html5
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
+		#end
+
+		#if android
+		FlxG.android.preventDefaultKeys = [BACK]; 
 		#end
 
 		#if CRASH_HANDLER
@@ -212,7 +216,7 @@ class Main extends Sprite
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
 		Application.current.window.alert(errMsg, "Error!");
-		DiscordClient.shutdown();
+		//DiscordClient.shutdown();
 		Sys.exit(1);
 	}
 	#end
