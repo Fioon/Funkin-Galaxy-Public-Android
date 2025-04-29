@@ -25,6 +25,8 @@ class ClientPrefs {
 	public static var camZooms:Bool = true;
 	public static var hideHud:Bool = false;
 	public static var noteOffset:Int = 0;
+	public static var hitboxmode:String = 'Classic';  //starting new way to change between hitboxes yay
+        public static var hitboxalpha:Float = 0.2; //someone request this lol
 	public static var arrowRGB:Array<Array<FlxColor>> = [
 		[0xFFC24B99, 0xFFFFFFFF, 0xFF3C1F56],
 		[0xFF00FFFF, 0xFFFFFFFF, 0xFF1542B7],
@@ -62,7 +64,7 @@ class ClientPrefs {
 	public static var scoreZoom:Bool = true;
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
-	public static var controllerMode:Bool = false;
+	public static var controllerMode:Bool = true;
 	public static var hitsoundVolume:Float = 0;
 	public static var pauseMusic:String = 'Tea Time';
 	public static var checkForUpdates:Bool = true;
@@ -162,6 +164,8 @@ class ClientPrefs {
 		FlxG.save.data.checkForUpdates = checkForUpdates;
 		FlxG.save.data.comboStacking = comboStacking;
 		FlxG.save.data.GPUCaching = GPUCaching;
+		FlxG.save.data.hitboxmode = hitboxmode;
+                FlxG.save.data.hitboxalpha = hitboxalpha;
 	
 		FlxG.save.flush();
 
@@ -290,6 +294,12 @@ class ClientPrefs {
 		if (FlxG.save.data.checkForUpdates != null)
 		{
 			checkForUpdates = FlxG.save.data.checkForUpdates;
+		}
+		if(FlxG.save.data.hitboxmode != null) {
+                        hitboxmode = FlxG.save.data.hitboxmode;
+                }
+                if(FlxG.save.data.hitboxalpha != null) {
+                        hitboxalpha = FlxG.save.data.hitboxalpha;
 		}
 		if (FlxG.save.data.comboStacking != null)
 			comboStacking = FlxG.save.data.comboStacking;
