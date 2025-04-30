@@ -183,7 +183,7 @@ class MainMenuState extends MusicBeatState
 	#end
 
 	var selectedSomethin:Bool = false;
-
+	var checkCountShit:Int = 0;
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music.volume < 0.8)
@@ -200,6 +200,18 @@ class MainMenuState extends MusicBeatState
 			return;
 		}
 
+		if(FlxG.mouse.justPressed){
+			if(checkCountShit < 2){
+				if(checkCountShit == 0 || checkCountShit < 0){		
+					checkCountShit = 1;
+				}else{
+					checkCountShit = 2;
+				}
+			}else{
+				// do nothing lol
+			}
+		}
+		
 		if (!selectedSomethin)
 		{
 			if (controls.UI_UP_P)
@@ -210,12 +222,13 @@ class MainMenuState extends MusicBeatState
 			if (controls.UI_DOWN_P)
 			{
 				changeItem(1);
-			}
-
-			if (controls.ACCEPT || FlxG.mouse.justPressed)
+			}	
+			
+			if (checkCountShit == 2 || FlxG.mouse.justPressed)
 			{
 				if (optionShit[curSelected] == 'donate')
 				{
+					checkCountShit = 0;
 					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
 				}
 				else
@@ -242,7 +255,7 @@ class MainMenuState extends MusicBeatState
 							FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
 							{
 								var daChoice:String = optionShit[curSelected];
-
+								checkCountShit = 0;
 								switch (daChoice)
 								{
 									case 'story_mode':
