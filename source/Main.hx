@@ -73,7 +73,8 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-
+		StorageUtil.gameCrashCheck();
+		
 		if (stage != null)
 		{
 			init();
@@ -110,6 +111,8 @@ class Main extends Sprite
 			game.width = Math.ceil(stageWidth / game.zoom);
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
+
+		StorageUtil.requestPermissionsAndCheck();
 		
 		hxvlc.util.Handle.init();
 		ClientPrefs.loadDefaultKeys();
