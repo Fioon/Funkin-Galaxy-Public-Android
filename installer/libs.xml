@@ -11,6 +11,7 @@
 
     <lib name="hscript"/>
     <lib name="hxdiscord_rpc" />
+    <lib name="extension-androidtools"/>
 
     <git name="linc_luajit" url="https://github.com/nebulazorua/linc_luajit" />
     <git name="hxcpp" url="https://github.com/FuroYT/hxcpp.git" />
