@@ -35,6 +35,9 @@ class FlashingState extends MusicBeatState
 		warnText.screenCenter(Y);
 		add(warnText);
 		
+		#if android
+                addVirtualPad(NONE, A_B);
+                #end
 		//Ivan, please, never code again https://cdn.discordapp.com/attachments/1045997810077671495/1108360738738798662/image.png
 		//I fixed your code and it STILL DIDNT DO ANYTHING
 		//var bg1:FlxSprite = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('screens/TITLEPIC1'));
