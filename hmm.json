@@ -3,7 +3,7 @@
       {
          "name": "lime",
          "type": "install",
-         "version": "8.2.1"
+         "version": "7.9.0"
       },
       {
          "name": "flixel",
@@ -23,7 +23,7 @@
       {
          "name": "openfl",
          "type": "install",
-         "version": "9.3.0"
+         "version": "9.1.0"
       },
       {
          "name": "hxvlc",
