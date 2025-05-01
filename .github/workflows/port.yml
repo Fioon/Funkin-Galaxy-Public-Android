@@ -44,8 +44,7 @@ jobs:
       
       - name: Install Haxelib
         run: |
-          @haxe -cp installer -D analyzer-optimize --run Main setup
-
+          haxe -cp ./actions -D analyzer-optimize -main Main --interp
       - name: Setup Lime
         run: |
           haxelib run lime setup -alias -y
