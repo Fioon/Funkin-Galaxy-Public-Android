@@ -7,9 +7,9 @@ name: Build Android
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ mainLOL ]
+    branches: [ main ]
   pull_request:
-    branches: [ mainLOL ]
+    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -20,23 +20,11 @@ jobs:
 
   buildAndroid:
     name: buildAndroid
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@main
-
-      - name: Setup Android NDK
-        uses: nttld/setup-ndk@main
-        id: setup-ndk
-        with:
-          ndk-version: r15c
-
-      - name: Setup Java JDK
-        uses: actions/setup-java@main
-        with:
-          distribution: 'zulu'
-          java-version: 11
-
+      
       - name: Setup Haxe
         uses: krdlab/setup-haxe@v1.2.0
         with:
@@ -45,6 +33,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxe -cp ./actions -D analyzer-optimize -main Main --interp
+          
       - name: Setup Lime
         run: |
           haxelib run lime setup -alias -y
@@ -56,7 +45,7 @@ jobs:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
       - name: Compile
-        run: haxelib run lime build android -D NO_PRECOMPILED_HEADERS --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build android
       
       - name: Save Current Cache
         uses: actions/cache/save@main
