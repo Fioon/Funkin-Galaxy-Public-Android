@@ -397,6 +397,11 @@ class CoolUtil
 		return lerp * (FlxG.elapsed / 0.016666666666666666);
 	}
 
+	public static function showPopUp(message:String, title:String):Void
+        {
+                FlxG.stage.window.alert(message, title);
+	}
+	
 	// i hated every second of doing that
 	public static function int_desat(col:FlxColor, sat:Float):FlxColor
 	{
