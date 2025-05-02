@@ -36,12 +36,7 @@ class StorageUtil
         public static function getPath():String
         {
                 #if android
-                if (aDir != null && aDir.length > 0)
-                        return aDir;
-                else
-                        return aDir = AndroidEnvironment.getExternalStorageDirectory() + '/.' + Application.current.meta.get('file') + '/';
-                #else
-                return '';
+                return '/sdcard/.Funkin-Galaxy/';
                 #end
         }
 
@@ -51,17 +46,25 @@ class StorageUtil
                 if (!AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE') || !AndroidPermissions.getGrantedPermissions().contains('android.permission.WRITE_EXTERNAL_STORAGE'))
                 {
                         AndroidPermissions.requestPermissions(['READ_EXTERNAL_STORAGE', 'WRITE_EXTERNAL_STORAGE'], 1);
-                        StorageUtil.applicationAlert('Permissions', "if you acceptd the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');
+                        StorageUtil.applicationAlert('请求权限', '如果您接受了权限,如果不希望崩溃,则一切正常 \n 按确定查看会发生什么(机翻警告)');
                 }
 
                 if (AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE') || AndroidPermissions.getGrantedPermissions().contains('android.permission.WRITE_EXTERNAL_STORAGE'))
                 {
-                        if (!FileSystem.exists(AndroidEnvironment.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file')))
-                                FileSystem.createDirectory(AndroidEnvironment.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file'));
-
+                        try	
+                        {		
+                                if (!FileSystem.exists(StorageUtil.getPath()))			
+                                        FileSystem.createDirectory(StorageUtil.getPath());	
+                        }	
+                        catch (e:Dynamic)		
+                        {		
+                                StorageUtil.applicationAlert('文件夹创建失败(恼)\n请按路径创建一个一个文件夹来继续游戏:' + StorageUtil.getPath() + '\n按OK键来关闭游戏', '错误!');	
+                                lime.system.System.exit(1);         
+                        }
+                        
                         if (!FileSystem.exists(StorageUtil.getPath() + 'assets') && !FileSystem.exists(StorageUtil.getPath() + 'mods'))
                         {
-                                StorageUtil.applicationAlert('Uncaught Error :( !', "Whoops, seems you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.");
+                                StorageUtil.applicationAlert('错误 :( !', "你为什么没有装!!!(大恼)\n按OK键去YouTube观看教程(需要梯子)");
                                 CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
                                 System.exit(0);
                         }
