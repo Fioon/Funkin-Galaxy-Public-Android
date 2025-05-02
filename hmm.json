@@ -50,13 +50,6 @@
          "url": "https://github.com/MobilePorting/hxcpp"
       },
       {
-         "name": "extension-androidtools",
-         "type": "git",
-         "dir": null,
-         "ref": "main",
-         "url": "https://github.com/MAJigsaw77/extension-androidtools"
-      },
-      {
          "name": "linc_luajit",
          "type": "git",
          "dir": null,
