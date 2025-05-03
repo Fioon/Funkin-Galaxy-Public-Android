@@ -44,7 +44,7 @@ class StorageUtil
                                 return aDir = AndroidEnvironment.getExternalStorageDirectory() + '/.' + Application.current.meta.get('file') + '/';
                 }catch (e:Dynamic){
                         CoolUtil.showPopUp(e, "Error! 02");
-return '';
+                        return ''; //fuck the return is null
                         //System.exit(0);
                 }
                 #else
