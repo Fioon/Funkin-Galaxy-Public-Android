@@ -146,6 +146,7 @@ class Main extends Sprite
 		FlxG.android.preventDefaultKeys = [BACK]; 
 		#end
 
+		CoolUtil.showPopUp('Done','Test 01');
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
