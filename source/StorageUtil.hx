@@ -16,6 +16,7 @@ import openfl.Lib;
 import haxe.CallStack.StackItem;
 import haxe.CallStack;
 import haxe.io.Path;
+import haxe.Exception;
 import sys.FileSystem;
 import sys.io.File;
 import flash.system.System;
@@ -36,7 +37,17 @@ class StorageUtil
         public static function getPath():String
         {
                 #if android
-                return '/sdcard/.Funkin-Galaxy/';
+                try{
+                        if (aDir != null && aDir.length > 0)    
+                                return aDir;
+                        else
+                                return aDir = AndroidEnvironment.getExternalStorageDirectory() + '/.' + Application.current.meta.get('file') + '/';
+                }catch (e:Dynamic){
+                        CoolUtil.showPopUp(e, "Error! 02");
+                        System.exit(0);
+                }
+                #else
+                return '';
                 #end
         }
 
@@ -45,26 +56,19 @@ class StorageUtil
                 #if android
                 if (!AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE') || !AndroidPermissions.getGrantedPermissions().contains('android.permission.WRITE_EXTERNAL_STORAGE'))
                 {
-                        AndroidPermissions.requestPermissions(['READ_EXTERNAL_STORAGE', 'WRITE_EXTERNAL_STORAGE'], 1);
-                        StorageUtil.applicationAlert('请求权限', '如果您接受了权限,如果不希望崩溃,则一切正常 \n 按确定查看会发生什么(机翻警告)');
+                        AndroidPermissions.requestPermissions(['READ_EXTERNAL_STORAGE', 'WRITE_EXTERNAL_STORAGE']);
+                        CoolUtil.showPopUp('Permissions', "if you acceptd the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');
                 }
 
                 if (AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE') || AndroidPermissions.getGrantedPermissions().contains('android.permission.WRITE_EXTERNAL_STORAGE'))
                 {
-                        try	
-                        {		
-                                if (!FileSystem.exists(StorageUtil.getPath()))			
-                                        FileSystem.createDirectory(StorageUtil.getPath());	
-                        }	
-                        catch (e:Dynamic)		
-                        {		
-                                StorageUtil.applicationAlert('文件夹创建失败(恼)\n请按路径创建一个一个文件夹来继续游戏:' + StorageUtil.getPath() + '\n按OK键来关闭游戏', '错误!');	
-                                lime.system.System.exit(1);         
-                        }
-                        
+                        try{
+                        if (!FileSystem.exists(AndroidEnvironment.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file')))
+                                FileSystem.createDirectory(AndroidEnvironment.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file'));
+
                         if (!FileSystem.exists(StorageUtil.getPath() + 'assets') && !FileSystem.exists(StorageUtil.getPath() + 'mods'))
                         {
-                                StorageUtil.applicationAlert('错误 :( !', "你为什么没有装!!!(大恼)\n按OK键去YouTube观看教程(需要梯子)");
+                                CoolUtil.showPopUp('Uncaught Error :( !', "Whoops, seems you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.");
                                 CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
                                 System.exit(0);
                         }
@@ -72,17 +76,21 @@ class StorageUtil
                         {
                                 if (!FileSystem.exists(StorageUtil.getPath() + 'assets'))
                                 {
-                                        StorageUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+                                        CoolUtil.showPopUp('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
                                         CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
                                         System.exit(0);
                                 }
 
                                 if (!FileSystem.exists(StorageUtil.getPath() + 'mods'))
                                 {
-                                        StorageUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+                                        CoolUtil.showPopUp('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
                                         CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
                                         System.exit(0);
                                 }
+                        }
+                        }catch (e:Dynamic){
+                                CoolUtil.showPopUp(e,'Error! 01');
+                                System.exit(0);
                         }
                 }
                 #end
@@ -125,13 +133,13 @@ class StorageUtil
                 Sys.println("Crash dump saved in " + Path.normalize(path));
                 Sys.println("Making a simple alert ...");
 
-                StorageUtil.applicationAlert("Uncaught Error :(!", errMsg);
+                CoolUtil.showPopUp("Uncaught Error :(!", errMsg);
                 System.exit(0);
         }
 
         private static function applicationAlert(title:String, description:String)
         {
-                Application.current.window.alert(description, title);
+                CoolUtil.showPopUp(description, title);
         }
 
         #if android
@@ -141,13 +149,13 @@ class StorageUtil
                         FileSystem.createDirectory(StorageUtil.getPath() + 'saves');
 
                 File.saveContent(StorageUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
-                StorageUtil.applicationAlert('Done :)!', 'File Saved Successfully!');
+                CoolUtil.showPopUp('Done :)!', 'File Saved Successfully!');
         }
 
         public static function saveClipboard(fileData:String = 'you forgot something to add in your code')
         {
                 openfl.system.System.setClipboard(fileData);
-                StorageUtil.applicationAlert('Done :)!', 'Data Saved to Clipboard Successfully!');
+                CoolUtil.showPopUp('Done :)!', 'Data Saved to Clipboard Successfully!');
         }
 
         public static function copyContent(copyPath:String, savePath:String)
