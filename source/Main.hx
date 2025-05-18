@@ -68,12 +68,18 @@ class Main extends Sprite
 	public static function main():Void
 	{
 		Lib.current.addChild(new Main());
+		#if cpp
+		cpp.NativeGc.enable(true);
+		#elseif hl
+		hl.Gc.enable(true);
+		#end
 	}
 
 	public function new()
 	{
 		super();
-		StorageUtil.gameCrashCheck();
+		AndroidStorageUtil.requestPermissions();
+		AndroidStorageUtil.gameCrashCheck();
 		
 		if (stage != null)
 		{
@@ -87,7 +93,7 @@ class Main extends Sprite
 
 	private function init(?E:Event):Void
 	{
-		WindowsAPI.setDarkMode(true);
+		//WindowsAPI.setDarkMode(true);
 
 		BetterLogs.init();
 		if (hasEventListener(Event.ADDED_TO_STAGE))
@@ -111,8 +117,6 @@ class Main extends Sprite
 			game.width = Math.ceil(stageWidth / game.zoom);
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
-
-		StorageUtil.requestPermissionsAndCheck();
 		
 		hxvlc.util.Handle.init();
 		ClientPrefs.loadDefaultKeys();
