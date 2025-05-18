@@ -49,6 +49,7 @@
          "name": "hxdiscord_rpc",
          "type": "install",
          "version": null
+      },
       {
          "name": "hxcpp",
          "type": "git",
