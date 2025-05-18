@@ -209,10 +209,10 @@ enum abstract StorageType(String) from String to String
 
                 errMsg += e.error;
 
-                if (!FileSystem.exists(StorageUtil.getPath() + "crash"))
-                FileSystem.createDirectory(StorageUtil.getPath() + "crash");
+                if (!FileSystem.exists(AndroidStorageUtil.getStorageDirectory() + "crash"))
+                FileSystem.createDirectory(AndroidStorageUtil.getStorageDirectory() + "crash");
 
-                File.saveContent(StorageUtil.getPath() + path, errMsg + "\n");
+                File.saveContent(AndroidStorageUtil.getStorageDirectory() + path, errMsg + "\n");
 
                 Sys.println(errMsg);
                 Sys.println("Crash dump saved in " + Path.normalize(path));
