@@ -10,7 +10,7 @@ import Controls;
 
 class ClientPrefs {
 	#if android
-	public static var storageType:String = "EXTERNAL_DATA";
+	public static var storageType:String = "EXTERNAL";
 	#end
 	public static var downScroll:Bool = false;
 	public static var colorblind:String = "None";
