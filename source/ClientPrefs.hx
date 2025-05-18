@@ -9,6 +9,9 @@ import flixel.input.keyboard.FlxKey;
 import Controls;
 
 class ClientPrefs {
+	#if android
+	public static var storageType:String = "EXTERNAL_DATA";
+	#end
 	public static var downScroll:Bool = false;
 	public static var colorblind:String = "None";
 	public static var middleScroll:Bool = false;
@@ -127,6 +130,9 @@ class ClientPrefs {
 	}
 
 	public static function saveSettings() {
+		#if android
+		FlxG.save.data.storageType = storageType;
+		#end
 		FlxG.save.data.downScroll = downScroll;
 		FlxG.save.data.colorblind = colorblind;
 		FlxG.save.data.middleScroll = middleScroll;
@@ -178,6 +184,11 @@ class ClientPrefs {
 
 	public static function loadPrefs() {
 		preventFlezJumpscare = true;
+		#if android
+		if(FlxG.save.data.storageType != null) {
+			storageType = FlxG.save.data.storageType;
+		}
+		#end
 		if(FlxG.save.data.downScroll != null) {
 			downScroll = FlxG.save.data.downScroll;
 		}
