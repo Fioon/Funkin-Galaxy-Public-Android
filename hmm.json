@@ -5,7 +5,7 @@
          "type": "git",
          "dir": null,
          "ref": "main",
-         "url": "https://github.com/HomuHomu833-stuff/lime-8.2.1"
+         "url": "https://github.com/VapireMox/lime"
       },
       {
       
@@ -55,14 +55,14 @@
          "type": "git",
          "dir": null,
          "ref": "main",
-         "url": "https://github.com/MobilePorting/hxcpp"
+         "url": "https://github.com/beihu235/hxcpp"
       },
       {
          "name": "linc_luajit",
          "type": "git",
          "dir": null,
          "ref": "master",
-         "url": "https://github.com/MobilePorting/linc_luajit"
+         "url": "https://github.com/tchcfhvgd/linc_luajit"
       }
    ]
 }
